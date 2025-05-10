@@ -1,0 +1,50 @@
+fetch("http://localhost:5000/api/crime_arrest_rate")
+  .then(res => res.json())
+  .then(data => {
+    const width = 800;
+    const height = 400;
+    const margin = { top: 20, right: 30, bottom: 60, left: 60 };
+
+    const svg = d3.select("#bar-arrest-rate-chart")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    const x = d3.scaleBand()
+      .domain(data.map(d => d.type))
+      .range([margin.left, width - margin.right])
+      .padding(0.5);
+
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.rate)])
+      .nice()
+      .range([height - margin.bottom, margin.top]);
+
+    svg.append("g")
+      .attr("fill", "#00bfff")
+      .selectAll("rect")
+      .data(data)
+      .join("rect")
+      .attr("x", d => x(d.type))
+      .attr("y", d => y(d.rate))
+      .attr("height", d => y(0) - y(d.rate))
+      .attr("width", x.bandwidth());
+
+    svg.append("g")
+      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+      .attr("transform", "rotate(-30)")
+      .style("text-anchor", "end");
+
+    svg.append("g")
+      .attr("transform", `translate(${margin.left},0)`)
+      .call(d3.axisLeft(y).tickFormat(d => d + "%"));
+
+    svg.append("text")
+      .attr("x", width / 2)
+      .attr("y", margin.top)
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .text("逮捕率最高的犯罪类型（%）");
+  });

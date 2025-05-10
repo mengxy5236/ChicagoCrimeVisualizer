@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Chicago Crime Visualization</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      h1 {
+        font-size: 2.5em;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        margin-top: 20px;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        background: url(images/blue-chicago.jpg) no-repeat center center fixed;
+        background-size: cover; 
+        background-position: center;
+      }
+      
+      .carousel-container {
+        width: 800px;
+        overflow: hidden;
+        margin: 40px auto;
+        position: relative;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        background-color: #ffffff;
+      }
+  
+      .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease;
+        width: 2400px; /* 3 charts x 800px */
+      }
+  
+      .chart-slide {
+        width: 800px;
+        height: 450px;
+        flex-shrink: 0;
+        position: relative;
+      }
+  
+      .nav-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+  
+      button {
+        padding: 8px 16px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background-color: #0088cc;
+        color: white;
+        transition: background-color 0.3s;
+      }
+  
+      button:hover {
+        background-color: #0070a7;
+      }
+
+      .chart-caption {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #333;
+}
+    </style>
+  </head>
+  <body>
+    <h1>芝加哥犯罪数据图表</h1>
+  
+    <div class="carousel-container">
+      <div class="carousel-track" id="carousel-track">
+        <div class="chart-slide">
+          <div id="line-year-chart"></div>
+          <p class="chart-caption">犯罪数量按年份统计折线图</p>
+        </div>
+        <div class="chart-slide">
+          <div id="line-year-theft-chart"></div>
+          <p class="chart-caption">特定犯罪类型（如盗窃）的年度趋势折线图</p>
+        </div>
+        <div class="chart-slide">
+          <div id="bar-weekday-chart"></div>
+          <p class="chart-caption">犯罪周内分布柱形图（全部犯罪）</p>
+        </div>
+        <div class="chart-slide">
+          <div id="pie-time-of-day-chart"></div>
+          <p class="chart-caption">犯罪日内时段分布饼形图（全部犯罪）</p>
+        </div>
+        <div class="chart-slide">
+          <div id="bar-arrest-rate-chart"></div>
+          <p class="chart-caption">逮捕率最高的犯罪类型柱形图</p>
+        </div>
+        <div class="chart-slide">
+          <div id="pie-district-density-chart"></div>
+          <p class="chart-caption">不同区域的犯罪密度</p>
+        </div>
+        <div class="chart-slide">
+          <div id="pie-location-chart"></div>
+          <p class="chart-caption">犯罪地点类型分析</p>
+        </div>
+        <div class="chart-slide">
+          <div id="line-arrest-rate-chart"></div>
+          <p class="chart-caption">不同年份的逮捕率变化</p>
+        </div>
+        <div class="chart-slide">
+          <div id="bar-iucr-chart"></div>
+          <p class="chart-caption">IUCR代码对应的高发犯罪类型</p>
+        </div>
+        <div class="chart-slide">
+          <div id="bar-weapon-ratio-chart"></div>
+          <p class="chart-caption">高频犯罪类型中涉及武器的比例</p>
+        </div>
+        <div class="chart-slide">
+          <div id="pie-beat-chart"></div>
+          <p class="chart-caption">不同 Beat 区域的犯罪统计</p>
+        </div>
+        <div class="chart-slide">
+          <div id="line-case-resolution-chart"></div>
+          <p class="chart-caption">不同年份的案件处理时效（天）</p>
+        </div>
+        <div class="chart-slide">
+          <div id="bar-month-chart"></div>
+          <p class="chart-caption">高发月份分析（全部犯罪）</p>
+        </div>
+        <div class="chart-slide">
+          <div id="bar-type-hour-chart"></div>
+          <p class="chart-caption">高发犯罪类型在一天中的时段分布（堆叠柱状图）</p>
+        </div>
+        <div class="chart-slide">
+          <div id="bar-district-chart"></div>
+          <p class="chart-caption">各地区逮捕率对比柱状图</p>
+        </div>
+        
+
+      </div>
+    </div>
+  
+    <div class="nav-buttons">
+      <button onclick="showPrev()">⬅ 上一个</button>
+      <button onclick="showNext()">下一个 ➡</button>
+    </div>
+  
+    <script src="js/line_year.js"></script>
+    <script src="js/line_theft.js"></script>
+    <script src="js/bar_weekday.js"></script>
+    <script src="js/pie_time_of_day.js"></script>
+    <script src="js/bar_arrest_rate.js"></script>
+    <script src="js/pie_district_density.js"></script>
+    <script src="js/location_crime_chart.js"></script>
+    <script src="js/line_year_arrest_rate.js"></script>
+    <script src="js/iucr_bar_chart.js"></script>
+    <script src="js/weapon_ratio_bar_chart.js"></script>
+    <script src="js/beat_pie_chart.js"></script>
+    <script src="js/case_resolution_line_chart.js"></script>
+    <script src="js/crime_by_month.js"></script>
+    <script src="js/type_hour_bar.js"></script>
+    <script src="js/crime_by_district.js"></script>
+
+  
+    <script>
+      const track = document.getElementById('carousel-track');
+      const totalSlides = 15;
+      let currentIndex = 0;
+  
+      function updateSlide() {
+        const offset = -currentIndex * 800; // 800px = slide width
+        track.style.transform = `translateX(${offset}px)`;
+      }
+  
+      function showNext() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlide();
+      }
+  
+      function showPrev() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateSlide();
+      }
+    </script>
+  </body>
+</html>
